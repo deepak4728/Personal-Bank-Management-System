@@ -15,6 +15,6 @@ A fully interactive, console-based banking simulation built in Python. This proj
 * **Core Concepts:** OOP, Iterators, Generators, Functional Programming concepts.
 
 ## 🛠️ Getting Started
-1. Clone the repository: `git clone https://github.com/deepak4728/personal-bank-management.git`
+1. Clone the repository: `git clone https://github.com/deepak4728/Personal-Bank-Management-System.git`
 2. Navigate to the project directory: `cd personal-bank-management`
 3. Run the application: `python main.py`

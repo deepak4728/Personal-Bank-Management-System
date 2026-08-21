@@ -7,24 +7,30 @@ from itertools import combinations
 class BankError(Exception):
   """Base for every error this bank can raise."""
 
+
 class InvalidAmountError(BankError):
   def __init__(self, raw):
     super().__init__(f"\"{raw}\" isn't a valid amount — enter a number greater than 0.")
+
 
 class InsufficientFundsError(BankError):
   def __init__(self, number, shortfall):
     super().__init__(f"Account {number} would go {money(shortfall)} past its overdraft limit.")
 
+
 def random_reference_digits():
   return str(random.randint(1000, 9999))
 
+
 def timestamp_now():
   return datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+
 
 def money(amount):
   if amount < 0:
     return f"-${abs(amount):.2f}"
   return f"${amount:.2f}"
+
 
 def money_signed(amount):
   if amount > 0:
@@ -108,12 +114,14 @@ class Account:
     number = f"{application['branch']}-{random_reference_digits()}"
     return cls(number, application["opening_balance"])
 
+
 class SavingsAccount(Account):
   INTEREST_RATE = 0.02
 
   @classmethod
   def account_type(cls):
     return "Savings"
+
 
 class CheckingAccount(Account):
   TRANSACTION_FEE = 1.50
@@ -132,6 +140,7 @@ class CheckingAccount(Account):
     self.balance = self.balance - fee
     self.post_transaction("FEE", -fee, "withdrawal fee")
 
+
 class CreditAccount(Account):
   @classmethod
   def account_type(cls):
@@ -144,9 +153,11 @@ class CreditAccount(Account):
   def overdraft_limit(self):
     return -self.credit_limit
 
+
 class OverdraftMixin:
   def overdraft_limit(self):
     return -100
+
 
 class FlexAccount(OverdraftMixin, SavingsAccount):
   INTEREST_RATE = 0.015
@@ -166,11 +177,13 @@ FEE_RULES = {
 def apply_rate(amount, rate_fn):
   return rate_fn(amount)
 
+
 def make_interest_calculator(rate):
   def interest_calculator(amount):
     return round(amount * rate, 2)
 
   return interest_calculator
+
 
 class AccountIterator:
   def __init__(self, accounts_list):
@@ -187,6 +200,7 @@ class AccountIterator:
     self.index += 1
     return acc
 
+
 def total_interest_earned(accounts_list):
   return sum(
     entry["amount"]
@@ -194,6 +208,7 @@ def total_interest_earned(accounts_list):
     for entry in acc.transactions()
     if entry["type"] == "INTEREST"
   )
+
 
 def all_transfer_pairings(accounts_list):
   pairings = []
@@ -214,6 +229,7 @@ def validate_amount(raw_text):
   if amount <= 0:
     raise InvalidAmountError(raw_text)
   return amount
+
 
 def perform_transaction(account, operation, raw_amount, target=None):
   succeeded = False
@@ -270,6 +286,7 @@ def perform_transaction(account, operation, raw_amount, target=None):
     "error": error,
   }
 
+
 def open_initial_accounts():
   savings_application = {
     "branch": "SV",
@@ -280,9 +297,11 @@ def open_initial_accounts():
   accounts.append(CreditAccount("CR-8834", -120.00, 500))
   accounts.append(FlexAccount("FX-2048", 305.75))
 
+
 def show(text):
   print()
   print(text)
+
 
 def ask(prompt):
   print()
@@ -304,14 +323,17 @@ def render_accounts_summary(accounts_list):
     lines.append(f"{icon} {type_name} Account {acc.account_number} = {money(acc.balance)}")
   return "\n".join(lines)
 
+
 def show_totals():
   total_balance = reduce(lambda running, acc: running + acc.balance, accounts, 0.0)
   total_interest = total_interest_earned(accounts)
   show(f"Total interest earned so far: {money(total_interest)}    Total balance: {money(total_balance)}")
 
+
 def show_welcome_facts():
   pairings = all_transfer_pairings(accounts)
   show(f"Ways to transfer between your own accounts: {', '.join(pairings)}")
+
 
 def prompt_choice(prompt_text, valid_choices):
   while True:
@@ -319,6 +341,7 @@ def prompt_choice(prompt_text, valid_choices):
     if raw.isdigit() and int(raw) in valid_choices:
       return int(raw)
     show(f"Please enter one of: {', '.join(str(c) for c in valid_choices)}")
+
 
 def prompt_amount():
   while True:
@@ -336,6 +359,7 @@ def build_ticket_top_border(acc):
   type_name = type(acc).account_type().upper()
   return ("* " * 10 + f'🪙 YOUR "{type_name}" ACCOUNT UPDATE 🪙 ' + "* " * 10).rstrip()
 
+
 def build_ticket_text(breakdown):
   lines = [f"Balance before:    {money(breakdown['before'])}"]
   for entry in breakdown["entries"]:
@@ -343,10 +367,12 @@ def build_ticket_text(breakdown):
   lines.append(f"Balance after:    {money(breakdown['after'])}")
   return "\n".join(lines)
 
+
 def show_account_ticket(acc, breakdown):
   show(build_ticket_top_border(acc))
   show(build_ticket_text(breakdown))
   show(CLOSING_STAR_BORDER)
+
 
 def run_transaction_flow():
   account_lines = ["Select an account:"]
@@ -413,6 +439,7 @@ def run_transaction_flow():
 
   show(render_accounts_summary(accounts))
   show_totals()
+
 
 def main():
   open_initial_accounts()

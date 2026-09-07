@@ -1,5 +1,5 @@
 # 🏦 Personal Bank Management System (World Bank)
-
+![System Architecture](system.png)
 A fully interactive, console-based banking simulation built in Python. This project demonstrates core programming concepts like Object-Oriented Programming (OOP), custom error handling, iterators, and generators while providing a seamless Command Line Interface (CLI) experience.
 
 ## ✨ Features

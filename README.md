@@ -1,20 +1,47 @@
 # 🏦 Personal Bank Management System (World Bank)
+
 ![System Architecture](system.png)
-A fully interactive, console-based banking simulation built in Python. This project demonstrates core programming concepts like Object-Oriented Programming (OOP), custom error handling, iterators, and generators while providing a seamless Command Line Interface (CLI) experience.
+
+A fully interactive, console-based banking simulation built with Python.  
+The project models realistic account operations while showcasing OOP, custom exceptions, iterators, generators, higher-order functions, and clean CLI interaction.
 
 ## ✨ Features
-* **Interactive CLI:** Navigate through intuitive menus, prompts, and beautifully formatted console output.
-* **Multiple Account Types:** Support for four distinct kinds of bank accounts tailored to different needs.
-* **Robust Transaction Pipeline:** Securely handle deposits, withdrawals, and account-to-account transfers.
-* **Account Ticketing:** Generate detailed breakdown tickets and success/error messages for every transaction.
-* **Custom Error Handling:** Implements bank-specific errors (e.g., `InvalidAmountError`) to prevent invalid operations.
-* **Bank State Rendering:** Real-time generation of account summaries and bank totals.
+
+- **Interactive CLI workflow** with guided account and transaction prompts.
+- **Four account types**:
+  - `SavingsAccount` (deposit interest)
+  - `CheckingAccount` (withdrawal fee)
+  - `CreditAccount` (credit limit support)
+  - `FlexAccount` (savings interest + overdraft behavior)
+- **Transaction support** for deposit, withdrawal, and account-to-account transfer.
+- **Per-transaction ledger entries** with timestamps, references, and running balances.
+- **Ticket-style transaction output** showing balance before/after and detailed activity lines.
+- **Domain-specific error handling** (`InvalidAmountError`, `InsufficientFundsError`, `BankError`).
+- **Live account summaries and totals**, including total balance and earned interest.
+
+## 🧠 Concepts Demonstrated
+
+- Object-Oriented Programming (inheritance, mixins, class methods, properties)
+- Custom exception design
+- Iterators and generators
+- Functional constructs (`reduce`, higher-order functions, lambdas)
 
 ## 🚀 Tech Stack
-* **Language:** Python 3.x
-* **Core Concepts:** OOP, Iterators, Generators, Functional Programming concepts.
+
+- **Language:** Python 3.x
+- **Runtime:** Standard Python interpreter (no external dependencies)
 
 ## 🛠️ Getting Started
-1. Clone the repository: `git clone https://github.com/deepak4728/Personal-Bank-Management-System.git`
-2. Navigate to the project directory: `cd personal-bank-management`
-3. Run the application: `python main.py`
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/deepak4728/Personal-Bank-Management-System.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Personal-Bank-Management-System
+   ```
+3. Run the application:
+   ```bash
+   python main.py
+   ```
